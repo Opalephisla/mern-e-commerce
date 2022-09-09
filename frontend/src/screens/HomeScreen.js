@@ -39,7 +39,7 @@ const HomeScreen = () => {
   }, [])
 
   return (
-    <div>
+    <div className="products-container">
       <Helmet>
         <title>Amazona</title>
       </Helmet>

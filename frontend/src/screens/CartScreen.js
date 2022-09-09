@@ -34,7 +34,7 @@ const CartScreen = () => {
   }
 
   return (
-    <div>
+    <div className="cart-container">
       <Helmet>
         <title>Shopping Cart</title>
       </Helmet>
@@ -79,7 +79,9 @@ const CartScreen = () => {
                         <i className="fas fa-plus-circle"></i>
                       </Button>
                     </Col>
-                    <Col md={3}>${item.price}</Col>
+                    <Col className="product-price" md={3}>
+                      ${item.price}
+                    </Col>
                     <Col md={2}>
                       <Button
                         variant="light"
@@ -99,7 +101,7 @@ const CartScreen = () => {
             <Card.Body>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h3>
+                  <h3 className="cart-total">
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
                     items) : $
                     {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
@@ -108,6 +110,7 @@ const CartScreen = () => {
                 <ListGroup.Item>
                   <div className="d-grid">
                     <Button
+                      className="m-3 mt-4"
                       type="button"
                       variant="primary"
                       disabled={cartItems.length === 0}
