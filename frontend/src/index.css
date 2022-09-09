@@ -14,7 +14,7 @@ a {
 }
 
 .site-container {
-  min-height: 100vh;
+  min-height: 96.8vh;
   
 }
 
@@ -32,6 +32,11 @@ a {
 .product-container {
   margin-top: 4rem;
 }
+
+.error-container {
+  margin-top: 4rem;
+}
+
 .cart-container {
   margin-top: 4rem;
 }

@@ -64,7 +64,9 @@ const ProductScreen = () => {
   return loading ? (
     <LoadingBox />
   ) : error ? (
-    <MessageBox variant="danger">{error}</MessageBox>
+    <div className="error-container">
+      <MessageBox variant="danger">{error}</MessageBox>
+    </div>
   ) : (
     (console.log(error, product),
     (
@@ -80,6 +82,7 @@ const ProductScreen = () => {
                   <title>{product.name}</title>
                 </Helmet>
               </ListGroup.Item>
+              <ListGroup.Item>{product.name}</ListGroup.Item>
               <ListGroup.Item>
                 <Rating
                   rating={product.rating}
