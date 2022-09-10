@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { Button, Card } from 'react-bootstrap'
-import Rating from './Rating'
-import axios from 'axios'
-import { Store } from '../Store'
+import React, { useContext } from "react"
+import { Link } from "react-router-dom"
+import { Button, Card } from "react-bootstrap"
+import Rating from "./Rating"
+import axios from "axios"
+import { Store } from "../Store"
 
 const Product = (props) => {
   const { product } = props
@@ -12,17 +12,17 @@ const Product = (props) => {
   const {
     cart: { cartItems },
   } = state
-
+  let OutOfStock = product.countInStock === 0
   const addToCartHandler = async (item) => {
     const existItem = cartItems.find((x) => x._id === product._id)
     const quantity = existItem ? existItem.quantity + 1 : 1
     const { data } = await axios.get(`/api/products/${item._id}`)
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock.')
+      window.alert("Sorry. Product out of Stock !")
       return
     }
     ctxDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: { ...item, quantity },
     })
   }
@@ -40,13 +40,11 @@ const Product = (props) => {
         <Card.Text>${product.price}</Card.Text>
         <Button
           onClick={() => addToCartHandler(product)}
-          disabled={product.countInStock === 0}
-          className={
-            product.countInStock === 0 ? 'btn-secondary' : 'btn-primary'
-          }
+          disabled={OutOfStock}
+          className={OutOfStock ? "btn-secondary" : "btn-primary"}
         >
-          {' '}
-          {product.countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}{' '}
+          {" "}
+          {OutOfStock ? "Out of Stock" : "Add to Cart"}{" "}
         </Button>
       </Card.Body>
     </Card>

@@ -41,6 +41,10 @@ a {
   margin-top: 4rem;
 }
 
+.signin-container {
+  margin-top: 4rem;
+}
+
 main {
   flex: 1;
 }
@@ -93,4 +97,8 @@ main {
 
 footer {
   margin: 0;
+}
+
+.small-container  {
+  max-width: 600px;
 }
