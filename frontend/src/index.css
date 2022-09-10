@@ -14,8 +14,7 @@ a {
 }
 
 .site-container {
-  min-height: 96vh;
-  max-height: 96vh;
+  height: 96vh;
 }
 
 .navbar-container {
