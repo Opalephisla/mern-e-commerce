@@ -4,6 +4,7 @@ import { Button, Card } from "react-bootstrap"
 import Rating from "./Rating"
 import axios from "axios"
 import { Store } from "../Store"
+import { toast } from "react-toastify"
 
 const Product = (props) => {
   const { product } = props
@@ -18,7 +19,7 @@ const Product = (props) => {
     const quantity = existItem ? existItem.quantity + 1 : 1
     const { data } = await axios.get(`/api/products/${item._id}`)
     if (data.countInStock < quantity) {
-      window.alert("Sorry. Product out of Stock !")
+      toast.error("Sorry. Product out of Stock !")
       return
     }
     ctxDispatch({
@@ -37,7 +38,7 @@ const Product = (props) => {
           <Card.Title>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
+        <Card.Text className="mt-2">${product.price}</Card.Text>
         <Button
           onClick={() => addToCartHandler(product)}
           disabled={OutOfStock}

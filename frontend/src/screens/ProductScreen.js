@@ -1,19 +1,20 @@
-import axios from 'axios'
-import React, { useContext, useEffect, useReducer } from 'react'
-import { Badge, Button, Card, Col, ListGroup, Row } from 'react-bootstrap'
-import { Helmet } from 'react-helmet-async'
-import { useNavigate, useParams } from 'react-router-dom'
-import { LoadingBox, MessageBox, Rating } from '../components'
-import { Store } from '../Store'
-import { getError } from '../utils'
+import axios from "axios"
+import React, { useContext, useEffect, useReducer } from "react"
+import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap"
+import { Helmet } from "react-helmet-async"
+import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
+import { LoadingBox, MessageBox, Rating } from "../components"
+import { Store } from "../Store"
+import { getError } from "../utils"
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_REQUEST':
+    case "FETCH_REQUEST":
       return { ...state, loading: true }
-    case 'FETCH_SUCCESS':
+    case "FETCH_SUCCESS":
       return { ...state, product: action.payload, loading: false }
-    case 'FETCH_FAIL':
+    case "FETCH_FAIL":
       console.log(action.payload)
       return { ...state, loading: false, error: action.payload }
     default:
@@ -29,16 +30,16 @@ const ProductScreen = () => {
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
     product: [],
     loading: true,
-    error: '',
+    error: "",
   })
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' })
+      dispatch({ type: "FETCH_REQUEST" })
       try {
         const result = await axios.get(`/api/products/slug/${slug}`)
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
+        dispatch({ type: "FETCH_SUCCESS", payload: result.data })
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err) })
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) })
       }
     }
     fetchData()
@@ -51,14 +52,14 @@ const ProductScreen = () => {
     const quantity = existItem ? existItem.quantity + 1 : 1
     const { data } = await axios.get(`/api/products/${product._id}`)
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock')
+      toast.error("Sorry. Product out of Stock !")
       return
     }
     ctxDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: { ...product, quantity: quantity },
     })
-    navigate('/cart')
+    navigate("/cart")
   }
 
   return loading ? (
@@ -117,10 +118,22 @@ const ProductScreen = () => {
                       </Col>
                     </Row>
                   </ListGroup.Item>
+                  {product.countInStock !== 0 && (
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Stock:</Col>
+                        <Col>{product.countInStock}</Col>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
                       <div className="d-grid">
-                        <Button onClick={addToCartHandler} variant="primary">
+                        <Button
+                          className="mt-3"
+                          onClick={addToCartHandler}
+                          variant="primary"
+                        >
                           Add to Cart
                         </Button>
                       </div>

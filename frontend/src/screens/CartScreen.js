@@ -1,10 +1,11 @@
-import axios from 'axios'
-import React, { useContext } from 'react'
-import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap'
-import { Helmet } from 'react-helmet-async'
-import { Link, useNavigate } from 'react-router-dom'
-import { MessageBox } from '../components'
-import { Store } from '../Store'
+import axios from "axios"
+import React, { useContext } from "react"
+import { Button, Card, Col, ListGroup, Row } from "react-bootstrap"
+import { Helmet } from "react-helmet-async"
+import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { MessageBox } from "../components"
+import { Store } from "../Store"
 
 const CartScreen = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -16,21 +17,21 @@ const CartScreen = () => {
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`)
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock.')
+      toast.error("Sorry. Product out of Stock !")
       return
     }
     ctxDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: { ...item, quantity },
     })
   }
 
   const removeItemHandler = async (item) => {
-    ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item })
+    ctxDispatch({ type: "CART_REMOVE_ITEM", payload: item })
   }
 
   const checkOutHandler = () => {
-    navigate('/signin?redirect=/shipping')
+    navigate("/signin?redirect=/shipping")
   }
 
   return (
@@ -51,11 +52,13 @@ const CartScreen = () => {
                 <ListGroup.Item key={item._id}>
                   <Row className="align-items-center">
                     <Col md={4}>
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="img-fluid rounded img-thumbnail"
-                      ></img>{' '}
+                      <Link to={`/product/${item.slug}`}>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="img-fluid rounded img-thumbnail"
+                        ></img>{" "}
+                      </Link>
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>
                     </Col>
                     <Col md={3}>
@@ -67,8 +70,8 @@ const CartScreen = () => {
                         }
                       >
                         <i className="fas fa-minus-circle"></i>
-                      </Button>{' '}
-                      <span>{item.quantity}</span>{' '}
+                      </Button>{" "}
+                      <span>{item.quantity}</span>{" "}
                       <Button
                         variant="light"
                         disabled={item.quantity === item.countInStock}
@@ -102,7 +105,7 @@ const CartScreen = () => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h3 className="cart-total">
-                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
+                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
                     items) : $
                     {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
                   </h3>
