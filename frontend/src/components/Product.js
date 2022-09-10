@@ -19,7 +19,6 @@ const Product = (props) => {
     const quantity = existItem
       ? existItem.quantity + productAmount
       : productAmount
-    console.log(existItem ? existItem.quantity + productAmount : productAmount)
     const { data } = await axios.get(`/api/products/${item._id}`)
     if (data.countInStock < quantity) {
       toast.error("Sorry. Product out of Stock !")
