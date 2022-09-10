@@ -7,10 +7,8 @@ import { Badge, Nav, NavDropdown } from "react-bootstrap"
 import Navbar from "react-bootstrap/Navbar"
 import { useContext } from "react"
 import "./App.css"
-import { HomeScreen, ProductScreen } from "./screens"
+import { HomeScreen, ProductScreen, CartScreen, SigninScreen } from "./screens"
 import { Store } from "./Store"
-import CartScreen from "./screens/CartScreen"
-import SigninScreen from "./screens/SigninScreen"
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
