@@ -59,6 +59,7 @@ const ProductScreen = () => {
       type: "CART_ADD_ITEM",
       payload: { ...product, quantity: quantity },
     })
+    toast.success(`${product.name} added to cart !`)
     navigate("/cart")
   }
 

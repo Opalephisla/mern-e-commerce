@@ -22,7 +22,12 @@ function App() {
   return (
     <BrowserRouter>
       <div className="d-flex flex-column site-container">
-        <ToastContainer position="top-right" limit={1} />
+        <ToastContainer
+          position="top-right"
+          limit={3}
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+        />
         <header>
           <Navbar className="navbar-container" bg="dark" variant="dark">
             <Container>

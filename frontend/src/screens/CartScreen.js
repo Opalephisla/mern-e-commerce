@@ -1,6 +1,13 @@
 import axios from "axios"
 import React, { useContext } from "react"
-import { Button, Card, Col, ListGroup, Row } from "react-bootstrap"
+import {
+  Button,
+  Card,
+  Col,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from "react-bootstrap"
 import { Helmet } from "react-helmet-async"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -103,19 +110,25 @@ const CartScreen = () => {
           <Card>
             <Card.Body>
               <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h3 className="cart-total">
-                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
-                    items) : $
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
-                  </h3>
-                </ListGroup.Item>
+                {cartItems.length !== 0 ? (
+                  <ListGroup.Item>
+                    <h3 className="cart-total">
+                      Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
+                      items) : $
+                      {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+                    </h3>
+                  </ListGroup.Item>
+                ) : (
+                  <ListGroupItem>
+                    <h3 className="cart-total">Your cart is empty.</h3>
+                  </ListGroupItem>
+                )}
                 <ListGroup.Item>
                   <div className="d-grid">
                     <Button
                       className="m-3 mt-4"
                       type="button"
-                      variant="primary"
+                      variant={cartItems.length === 0 ? "secondary" : "primary"}
                       disabled={cartItems.length === 0}
                       onClick={checkOutHandler}
                     >

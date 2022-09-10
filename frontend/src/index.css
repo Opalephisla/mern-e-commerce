@@ -14,8 +14,8 @@ a {
 }
 
 .site-container {
-  min-height: 96.8vh;
-  
+  min-height: 96vh;
+  max-height: 96vh;
 }
 
 .navbar-container {
@@ -27,6 +27,12 @@ a {
 
 .products-container {
   margin-top: 4rem;
+}
+
+#product-amount {
+  width: 20%;
+  padding-bottom: 8px;
+  justify-content: center
 }
 
 .product-container {
