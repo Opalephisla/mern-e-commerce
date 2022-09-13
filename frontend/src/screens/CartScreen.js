@@ -1,5 +1,5 @@
-import axios from "axios"
-import React, { useContext } from "react"
+import axios from 'axios'
+import React, { useContext } from 'react'
 import {
   Button,
   Card,
@@ -7,12 +7,12 @@ import {
   ListGroup,
   ListGroupItem,
   Row,
-} from "react-bootstrap"
-import { Helmet } from "react-helmet-async"
-import { Link, useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
-import { MessageBox } from "../components"
-import { Store } from "../Store"
+} from 'react-bootstrap'
+import { Helmet } from 'react-helmet-async'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { MessageBox } from '../components'
+import { Store } from '../Store'
 
 const CartScreen = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -24,21 +24,21 @@ const CartScreen = () => {
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`)
     if (data.countInStock < quantity) {
-      toast.error("Sorry. Product out of Stock !")
+      toast.error('Sorry. Product out of Stock !')
       return
     }
     ctxDispatch({
-      type: "CART_ADD_ITEM",
+      type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     })
   }
 
   const removeItemHandler = async (item) => {
-    ctxDispatch({ type: "CART_REMOVE_ITEM", payload: item })
+    ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item })
   }
 
   const checkOutHandler = () => {
-    navigate("/signin?redirect=/shipping")
+    navigate('/signin?redirect=/shipping')
   }
 
   return (
@@ -64,7 +64,7 @@ const CartScreen = () => {
                           src={item.image}
                           alt={item.name}
                           className="img-fluid rounded img-thumbnail"
-                        ></img>{" "}
+                        ></img>{' '}
                       </Link>
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>
                     </Col>
@@ -77,8 +77,8 @@ const CartScreen = () => {
                         }
                       >
                         <i className="fas fa-minus-circle"></i>
-                      </Button>{" "}
-                      <span>{item.quantity}</span>{" "}
+                      </Button>{' '}
+                      <span>{item.quantity}</span>{' '}
                       <Button
                         variant="light"
                         disabled={item.quantity === item.countInStock}
@@ -113,7 +113,7 @@ const CartScreen = () => {
                 {cartItems.length !== 0 ? (
                   <ListGroup.Item>
                     <h3 className="cart-total">
-                      Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
+                      Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
                       items) : $
                       {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
                     </h3>
@@ -128,7 +128,7 @@ const CartScreen = () => {
                     <Button
                       className="m-3 mt-4"
                       type="button"
-                      variant={cartItems.length === 0 ? "secondary" : "primary"}
+                      variant={cartItems.length === 0 ? 'secondary' : 'primary'}
                       disabled={cartItems.length === 0}
                       onClick={checkOutHandler}
                     >

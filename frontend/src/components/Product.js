@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react"
-import { Link } from "react-router-dom"
-import { Button, Card } from "react-bootstrap"
-import Rating from "./Rating"
-import axios from "axios"
-import { Store } from "../Store"
-import { toast } from "react-toastify"
+import React, { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Button, Card } from 'react-bootstrap'
+import Rating from './Rating'
+import axios from 'axios'
+import { Store } from '../Store'
+import { toast } from 'react-toastify'
 
 const Product = (props) => {
   const { product } = props
@@ -21,11 +21,11 @@ const Product = (props) => {
       : productAmount
     const { data } = await axios.get(`/api/products/${item._id}`)
     if (data.countInStock < quantity) {
-      toast.error("Sorry. Product out of Stock !")
+      toast.error('Sorry. Product out of Stock !')
       return
     }
     ctxDispatch({
-      type: "CART_ADD_ITEM",
+      type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     })
     toast.success(`${item.name} added to cart !`, {
@@ -62,10 +62,10 @@ const Product = (props) => {
         <Button
           onClick={() => addToCartHandler(product)}
           disabled={OutOfStock}
-          className={OutOfStock ? "btn-secondary" : "btn-primary"}
+          className={OutOfStock ? 'btn-secondary' : 'btn-primary'}
         >
-          {" "}
-          {OutOfStock ? "Out of Stock" : "Add to Cart"}{" "}
+          {' '}
+          {OutOfStock ? 'Out of Stock' : 'Add to Cart'}{' '}
         </Button>
       </Card.Body>
     </Card>
