@@ -14,6 +14,8 @@ import {
   SigninScreen,
   ShippingAddressScreen,
   SignupScreen,
+  PaymentMethodScreen,
+  PlaceOrderScreen,
 } from './screens'
 import { Store } from './Store'
 
@@ -26,6 +28,7 @@ function App() {
     localStorage.removeItem('userInfo')
     localStorage.removeItem('shippingAddress')
     localStorage.removeItem('cartItems')
+    localStorage.removeItem('paymentMethod')
   }
 
   return (
@@ -91,6 +94,8 @@ function App() {
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
+              <Route path="/payment" element={<PaymentMethodScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

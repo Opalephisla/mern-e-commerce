@@ -48,6 +48,13 @@ a {
 .checkout-container {
   margin-top: 8rem;
 }
+.payment-container {
+  margin-top: 8rem;
+}
+
+.place-order-container {
+  margin-top: 8rem;
+}
 
 .signup-container {
   margin-top:14rem;
@@ -56,6 +63,8 @@ a {
 .signin-container {
   margin-top: 16rem;
 }
+
+
 
 main {
   flex: 1;
