@@ -18,6 +18,7 @@ import {
   PlaceOrderScreen,
 } from './screens'
 import { Store } from './Store'
+import OrderScreen from './screens/OrderScreen'
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -90,6 +91,7 @@ function App() {
           <Container className="mt-3">
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/order/:id" element={<OrderScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignupScreen />} />

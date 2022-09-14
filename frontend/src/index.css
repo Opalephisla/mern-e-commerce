@@ -124,6 +124,10 @@ footer {
   max-width: 600px;
 }
 
+.checkout-link, .checkout-link:hover {
+  color: #f08000; 
+}
+
 .checkout-steps > div {
   border-bottom: 0.2rem solid #a0a0a0;
   color: #a0a0a0;
