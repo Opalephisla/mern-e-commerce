@@ -18,6 +18,7 @@ import {
   PlaceOrderScreen,
   OrderScreen,
   OrderHistoryScreen,
+  ProfileScreen,
 } from './screens'
 import { Store } from './Store'
 
@@ -103,6 +104,7 @@ function App() {
               <Route path="/order/:id" element={<OrderScreen />} />
               <Route path="/orderhistory" element={<OrderHistoryScreen />} />
               <Route path="/cart" element={<CartScreen />} />
+              <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
