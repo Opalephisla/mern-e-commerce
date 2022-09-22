@@ -16,10 +16,10 @@ import {
   SignupScreen,
   PaymentMethodScreen,
   PlaceOrderScreen,
+  OrderScreen,
+  OrderHistoryScreen,
 } from './screens'
 import { Store } from './Store'
-import OrderScreen from './screens/OrderScreen'
-import OrderHistoryScreen from './screens/OrderHistoryScreen'
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
