@@ -19,6 +19,7 @@ import {
 } from './screens'
 import { Store } from './Store'
 import OrderScreen from './screens/OrderScreen'
+import OrderHistoryScreen from './screens/OrderHistoryScreen'
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -42,48 +43,56 @@ function App() {
           pauseOnFocusLoss={false}
         />
         <header>
-          <Navbar className="navbar-container" bg="dark" variant="dark">
+          <Navbar
+            className="navbar-container"
+            bg="dark"
+            variant="dark"
+            expand="lg"
+          >
             <Container>
               <LinkContainer to="/">
                 <Navbar.Brand>amazona</Navbar.Brand>
               </LinkContainer>
-              <Nav className="me-auto">
-                <Link to="/cart" className="nav-link">
-                  Cart
-                  {cart.cartItems.length > 0 && (
-                    <Badge pill bg="danger">
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                    </Badge>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto w-100 justify-content-end">
+                  <Link to="/cart" className="nav-link">
+                    Cart
+                    {cart.cartItems.length > 0 && (
+                      <Badge pill bg="danger">
+                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      </Badge>
+                    )}
+                  </Link>
+                  {userInfo ? (
+                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                      <LinkContainer to="/profile">
+                        <NavDropdown.Item>User Profile</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/orderhistory">
+                        <NavDropdown.Item>Order History</NavDropdown.Item>
+                      </LinkContainer>
+                      <NavDropdown.Divider />
+                      <Link
+                        to="#signout"
+                        onClick={signoutHandler}
+                        className="dropdown-item"
+                      >
+                        Sign Out
+                      </Link>
+                    </NavDropdown>
+                  ) : (
+                    <>
+                      <Link className="nav-link" to="/signin">
+                        Sign In
+                      </Link>
+                      <Link className="nav-link" to="/signup">
+                        Sign Up
+                      </Link>
+                    </>
                   )}
-                </Link>
-                {userInfo ? (
-                  <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>User Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/orderhistory">
-                      <NavDropdown.Item>Order History</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Divider />
-                    <Link
-                      to="#signout"
-                      onClick={signoutHandler}
-                      className="dropdown-item"
-                    >
-                      Sign Out
-                    </Link>
-                  </NavDropdown>
-                ) : (
-                  <>
-                    <Link className="nav-link" to="/signin">
-                      Sign In
-                    </Link>
-                    <Link className="nav-link" to="/signup">
-                      Sign Up
-                    </Link>
-                  </>
-                )}
-              </Nav>
+                </Nav>
+              </Navbar.Collapse>
             </Container>
           </Navbar>
         </header>
@@ -92,6 +101,7 @@ function App() {
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/order/:id" element={<OrderScreen />} />
+              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
