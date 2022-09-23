@@ -29,7 +29,6 @@ const HomeScreen = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' })
       try {
-        await axios.get('/api/seed')
         const result = await axios.get('/api/products')
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
       } catch (err) {
