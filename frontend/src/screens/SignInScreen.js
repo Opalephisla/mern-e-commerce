@@ -57,6 +57,7 @@ const SigninScreen = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      axios.get('/api/seed')
       const result = await axios.get('/api/products')
       dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
     }
