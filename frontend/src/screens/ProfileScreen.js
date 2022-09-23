@@ -1,8 +1,9 @@
 import axios from 'axios'
-import React, { useContext, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer } from 'react'
 import { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Helmet } from 'react-helmet-async'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Store } from '../Store'
 import { getError } from '../utils'
@@ -21,10 +22,11 @@ const reducer = (state, action) => {
 }
 
 export default function ProfileScreen() {
+  const navigate = useNavigate()
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { userInfo } = state
-  const [name, setName] = useState(userInfo.name)
-  const [email, setEmail] = useState(userInfo.email)
+  const [name, setName] = useState(userInfo?.name)
+  const [email, setEmail] = useState(userInfo?.email)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -32,24 +34,41 @@ export default function ProfileScreen() {
     loadingUpdate: false,
   })
 
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/signin')
+    }
+  }, [userInfo, navigate])
+
   const submitHandler = async (e) => {
     e.preventDefault()
-    try {
-      const { data } = await axios.put(
-        '/api/users/profile',
-        {
-          name,
-          email,
-          password,
-        },
-        {},
-      )
-      ctxDispatch({ type: 'USER_LOGIN', payload: data })
-    } catch (err) {
-      dispatch({
-        type: 'FETCH_FAIL',
-      })
-      toast.error(getError(err))
+    if (password === confirmPassword) {
+      try {
+        const { data } = await axios.put(
+          '/api/users/profile',
+          {
+            name,
+            email,
+            password,
+          },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          },
+        )
+        dispatch({
+          type: 'UPDATE_SUCCESS',
+        })
+        ctxDispatch({ type: 'USER_SIGNIN', payload: data })
+        localStorage.setItem('userInfo', JSON.stringify(data))
+        toast.success('User updated successfully')
+      } catch (err) {
+        dispatch({
+          type: 'FETCH_FAIL',
+        })
+        toast.error(getError(err))
+      }
+    } else {
+      toast.error('Passwords not match')
     }
   }
   return (
