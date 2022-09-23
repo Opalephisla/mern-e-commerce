@@ -60,6 +60,7 @@ const SigninScreen = () => {
       const result = await axios.get('/api/products')
       dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
     }
+    fetchData()
     if (userInfo) {
       navigate(redirect)
     }
