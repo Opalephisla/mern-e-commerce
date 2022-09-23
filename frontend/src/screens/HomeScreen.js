@@ -1,17 +1,16 @@
-import React, { useEffect, useReducer } from 'react'
-import axios from 'axios'
-import { Row, Col } from 'react-bootstrap'
-import { Product, LoadingBox, MessageBox } from '../components'
-import { Helmet } from 'react-helmet-async'
-// import data from '../data'
+import React, { useEffect, useReducer } from "react"
+import axios from "axios"
+import { Row, Col } from "react-bootstrap"
+import { Product, LoadingBox, MessageBox } from "../components"
+import { Helmet } from "react-helmet-async"
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_REQUEST':
+    case "FETCH_REQUEST":
       return { ...state, loading: true }
-    case 'FETCH_SUCCESS':
+    case "FETCH_SUCCESS":
       return { ...state, products: action.payload, loading: false }
-    case 'FETCH_FAIL':
+    case "FETCH_FAIL":
       console.log(action.payload)
       return { ...state, loading: false, error: action.payload }
     default:
@@ -19,27 +18,26 @@ const reducer = (state, action) => {
   }
 }
 
-const HomeScreen = () => {
+function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
     loading: true,
-    error: '',
+    error: "",
   })
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' })
+      dispatch({ type: "FETCH_REQUEST" })
       try {
-        const result = await axios.get('/api/products')
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
+        const result = await axios.get("/api/products")
+        dispatch({ type: "FETCH_SUCCESS", payload: result.data })
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: err.message })
+        dispatch({ type: "FETCH_FAIL", payload: err.message })
       }
     }
     fetchData()
   }, [])
-
   return (
-    <div className="products-container">
+    <div>
       <Helmet>
         <title>Amazona</title>
       </Helmet>
@@ -48,11 +46,7 @@ const HomeScreen = () => {
         {loading ? (
           <LoadingBox />
         ) : error ? (
-          <div className="error-container">
-            <MessageBox className="error-container" variant="danger">
-              {error}
-            </MessageBox>
-          </div>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
             {products.map((product) => (
@@ -66,5 +60,4 @@ const HomeScreen = () => {
     </div>
   )
 }
-
 export default HomeScreen
