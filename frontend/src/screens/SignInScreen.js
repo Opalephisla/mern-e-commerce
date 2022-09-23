@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
@@ -35,33 +35,7 @@ const SigninScreen = () => {
     }
   }
 
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case 'FETCH_REQUEST':
-        return { ...state, loading: true }
-      case 'FETCH_SUCCESS':
-        return { ...state, products: action.payload, loading: false }
-      case 'FETCH_FAIL':
-        console.log(action.payload)
-        return { ...state, loading: false, error: action.payload }
-      default:
-        return state
-    }
-  }
-
-  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
-    products: [],
-    loading: true,
-    error: '',
-  })
-
   useEffect(() => {
-    const fetchData = async () => {
-      axios.get('/api/seed')
-      const result = await axios.get('/api/products')
-      dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
-    }
-    fetchData()
     if (userInfo) {
       navigate(redirect)
     }
